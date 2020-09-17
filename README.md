@@ -1,5 +1,5 @@
 # fileGL
-Tired of organizing your files? Yes, You got a Solution! Fileg is a python package for organizing files into folders.
+Tired of organizing your files? Yes, You got a Solution! FileGL is a python package for organizing files into folders.
 
 
 ## Files can be organized based on
@@ -71,4 +71,4 @@ For all the ways of Organising,the function will take a parameter,
 ### What to expect in Future from this package?
 
     This package is now in development phase.In the mere future various other types will also be added in this package. 
-    To list few, dedicated organiser for organising programming files organising music files etc.,
+    To list few, dedicated organiser for organising programming files, organising music files etc.,
