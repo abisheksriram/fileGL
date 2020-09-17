@@ -28,7 +28,7 @@ then you can skip this step and go to Organising ways
 then copy the address(path) .Then call the function
 working_path() which takes two optional parameters
 
-    working_path(src=True,dest=False)
+    fileGL.working_path(src=True,dest=False)
 
         -src :source directory 
         -dest:destination directory
@@ -51,23 +51,24 @@ For all the ways of Organising,the function will take a parameter,
 
     If you want to organize your files based on date ,
     then call,
-        datewise(history=False)
+        fileGL.datewise(True)
 
 ### File-Format based Organising
 
     If you want to organize your files based on file-format ,
         then call,
-            typewise(history=False)
+            fileGL.typewise(True)
 
 ### File-Name based Organising
 
     If you want to organize your files based on name ,
         then call,
-            namewise(history=False)
+            fileGL.namewise(True)
         In this type,user will be prompted to enter list of file name to organise
         this type of organising will organise by matching list of file names
         entered by user with the file names
         
 ### What to expect in Future from this package?
 
-    This package is now in development phase.In the mere future various other types will also be added in this package. To list few, dedicated organiser for organising programming files organising music files etc.,
+    This package is now in development phase.In the mere future various other types will also be added in this package. 
+    To list few, dedicated organiser for organising programming files organising music files etc.,
