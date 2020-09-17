@@ -1,5 +1,5 @@
 # fileGL
-Tired of organizing your files? Yes, You got a Solution! FileGL is a python package for organizing files into folders.
+Tired of organizing your files? Yes, You got a Perfect Solution! fileGL is a python package for organizing files into folders.
 
 
 ## Files can be organized based on
@@ -9,7 +9,7 @@ Tired of organizing your files? Yes, You got a Solution! FileGL is a python pack
     -File Name
 
 
-Before starting Please install the PyPi package!!
+# Before starting Please install the PyPi package!!
 
 ## To Install:
 
