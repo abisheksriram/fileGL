@@ -12,7 +12,6 @@ class fileGL:
             organising the file based on different parameters
             such as name,date and file type.
             
-            Also in future ,exclusive organiser for music and programming files will be added.
     '''
     
     files=[]
@@ -24,18 +23,15 @@ class fileGL:
     
     def format_available(self):
         '''
-        _format_available()
-        this function create a list for different types of file with the possible extension
+        format_available()
+             create a list for different types of file with the possible extension
         
         Types of files for sorting:
-            music,videos,pictures,excel,pdfs,documents,archive,executable,programming,prog_others(other program files)
+            music,videos,pictures,excel,pdfs,documents,archive,
+            executable,programming,prog_others(other program files)
             
         '''
-        
-#         filetype_label=['music','videos','pictures','excel','pdfs','documents','slides','archive','executable','programming','prog_others']
-#           file_list=[music,videos,pictures,excel,pdfs,documents,slides,archive,executable,programming,prog_others]      
-        #file_type=[list of file extensions]
-    
+
         global types
         types={
             'music':['3gp','mp3','ogg','amr'],
@@ -54,12 +50,12 @@ class fileGL:
         
         
     
-    def is_common_words(self,word):
+    def is_common_word(self,word):
         '''
             common_words():
-                this functions creates a list of frequently used words 
+                creates a list of frequently used words 
                 in english.For name based organising,if these words 
-                present in the file name ,then they will me eliminated.
+                present in the file name then it will return True, else False.
                 
         '''
         
@@ -76,7 +72,7 @@ class fileGL:
     def folder_manager(self,path):
         '''
         folder_manager(path):
-                    this function checks for the existence of passed folder (path) 
+                    checks for the existence of passed folder (path) 
                     if it doesnt exists ,it will create one 
                     if it exists, it will use the same
         
@@ -99,9 +95,9 @@ class fileGL:
         text="\n"
         global files,source_path,destination_path
         global organise_type,os_platform
-        os_platform="windows"
+        os_platform="Windows"
         
-        with open(os.path.join(source_path,"file_manager history.txt"),"a+") as history:
+        with open(os.path.join(destination_path,"file_manager history.txt"),"a+") as history:
         
             text+='\n'+datetime.datetime.now().strftime("%a: %d-%m-%y  %H:%M:%S")
             text+='\n'+'Source Path: '+str(source_path)
@@ -111,10 +107,14 @@ class fileGL:
             text+='\n'+'OS-platform: '+os_platform
             text+='\n----------------------------------------------------------------------------'
             text+='\n'+'\n'.join(os.listdir(source_path))
+            text+='\n'+'''Note:All the files mentioned above have been processed.
+            But not all the files might not be moved to destination,   
+            since alredy a file might have exist in that folder with same name'''
             text+='\n----------------------------------------------------------------------------'
             text+='\n----------------------------------------------------------------------------'
             history.write(text)
-           # list()
+           
+        
     def join_path(self,file):
         '''
         join_path(file):
@@ -122,9 +122,7 @@ class fileGL:
         '''
         return source_path/file
     
-    
-   
-        
+           
     def list_files(self):
         '''
             list_files(path):
@@ -142,7 +140,7 @@ class fileGL:
         if len(str(source_path))<1:
             print("Warning:Please run get_path() method to initialize source & destination path.") 
             choice=input("Do you want to continue with current Directory?[Yes or No]:")
-            if choice=='Yes' or choice=='yes':
+            if choice=='yes' or choice=='Yes':
                 files=list(filter(os.path.isfile,os.listdir()))
             else:
                 print("Exiting Program !!")
@@ -150,8 +148,9 @@ class fileGL:
         else:
             files=list(map(self.join_path,os.listdir(source_path)))
             files=list(map(os.path.basename,filter(os.path.isfile,files)))
-        # filter function filter the list (eliminates folders) and return only files    
-        
+          
+        if ("file_manager history.txt") in files:
+            files.remove("file_manager history.txt")
         
     def get_path(self,source=True,destination=False):
         '''
@@ -162,24 +161,32 @@ class fileGL:
         global source_path,destination_path
         
         if source:
-            source_path=Path(input("Please ,enter Source Path:"))
+            source_path=Path(input("\nEnter Source Path:"))
         if destination:
-            destination_path=Path(input("Please,enter Destination path:"))
+            destination_path=Path(input("\nEnter Destination path:"))
         else:
             destination_path=source_path
-            
-#     def run_preliminaries():
-#         '''
-#         run_preliminaries():
-#               this function runs all the required functions which has to be executed before 
-#               the given function executes
-#         '''
+
+    def file_move(self,file_name,dest_folder):
+        '''
+        file_move(self,file_name,dest_folder):
+            to move the file_name to dest_folder from source_path
         
+        '''
+        global destination_path,source_path
+        
+        self.folder_manager(os.path.join(destination_path,dest_folder))
+        
+        if os.path.exists(os.path.join(destination_path,dest_folder,file_name)):
+            print("Skipping:",file_name,"\tReason: File already Exists in destination!")
+            return
+            
+        shutil.move(os.path.join(source_path,file_name),os.path.join(destination_path,dest_folder))
         
     def datewise_organiser(self,history=False):
         '''
             datewise_organise():
-                this function is used for organising files based on creation time.
+                used for organising files based on creation time.
                 
                 optional parameter:
                 history=False :to generate the organizing history as a text file 
@@ -195,19 +202,15 @@ class fileGL:
             self.history_writer()
        
         
-        for file in files:            
-           # if file.endswith(".pynb"):continue
+        for file in files:    
             file_time=datetime.datetime.fromtimestamp(os.path.getmtime(os.path.join(source_path,file))).strftime('%a %d-%m-%Y')
-#             print(os.path.join(destination_path,file_time))
-            self.folder_manager(os.path.join(destination_path,file_time))
-#             print(os.path.join(source_path,file)," -",os.path.join(destination_path,file_time))
-            shutil.move(os.path.join(source_path,file),os.path.join(destination_path,file_time))
-        
+            self.file_move(file,file_time)
+
             
     def typewise_organiser(self,history=False):
         '''
             typewise_organise():
-                this function is used for organising files based on file format.
+                used for organising files based on file format.
                 
                 optional parameter:
                 history=False :to generate the organizing history as a text file 
@@ -221,36 +224,34 @@ class fileGL:
         
         if history:
             self.history_writer()
-        
-        
+                
         self.format_available()
         for file in files:
-            extension=file.split(".")[-1]
-        # print(extension,end=" ") # to know what types of files has been moved
+            extension=file.split(".")[-1]        
             for key,values in types.items():
                 for value in values:
                     if extension==value:
-                        self.folder_manager(os.path.join(destination_path,key))                
-                        shutil.move(os.path.join(source_path,file),os.path.join(destination_path,key))
+                        self.file_move(file,key)
+
        
-            
+                    
             
     def name_match(self,file,name):
         '''
             name_match(file,name):
-                This function checks for the splitted user input is present in the listed 
+                checks for the splitted user input is present in the listed 
                 file name
                 
         '''
         for sub_name in name.split():
-            if file.find(sub_name)!=-1:
+            if not(self.is_common_word(sub_name)) and file.find(sub_name)!=-1:
                 return True
         return False
             
     def namewise_organiser(self,history=False):
         '''
             namewise_organise():
-                this function is used for organising files based on name entered by the 
+                used for organising files based on name entered by the 
                 user input list.
                 
                 optional parameter:
@@ -264,28 +265,25 @@ class fileGL:
         self.list_files()
         
         if history:
-            self.history_writer()
-            
+            self.history_writer()            
         
-        file_names=list(input("Enter list of files names to separated by comma").split(',')) 
-        for file in files:    
-#             if file.endswith(".ipynb"):continue 
+        file_names=list(input("\nEnter list of files names separated by comma:").split(',')) 
+        for file in files:
             flag=False
             for name in file_names:
                 if file.find(name)!=-1:
-                    self.folder_manager(os.path.join(destination_path,name))
-                    shutil.move(os.path.join(source_path,file),os.path.join(destination_path,name))
+                    self.file_move(file,name)
                     flag=True
                     break
                 elif self.name_match(file,name):
-                    self.folder_manager(os.path.join(destination_path,name))
-                    shutil.move(os.path.join(source_path,file),os.path.join(destination_path,name))
+                    self.file_move(file,name)
                     flag=True
                     break
         
             if not flag:
-                self.folder_manager(os.path.join(destination_path,"others"))
-                shutil.move(os.path.join(source_path,file),os.path.join(destination_path,"others"))
+                self.file_move(file,"Others")
+                
+# To improve user productivity,below implementation is used                
 f=fileGL()
 def typewise(history):
     global f

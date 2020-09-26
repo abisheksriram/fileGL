@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 setuptools.setup(
     name="fileGL", # Replace with your own username
 
-    version="1.2.0b1",
+    version="1.2.0rc1",
 
 
     author="Abishek Sriram",
@@ -20,7 +20,7 @@ setuptools.setup(
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: Apache Software License",
         "Operating System :: Microsoft :: Windows",
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 4 - Beta",
         "Environment :: Console",
         
     ],
