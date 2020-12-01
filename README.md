@@ -1,9 +1,3 @@
-Hurray! 
-
-This repo is now accepting PRs for HACKTOBERFEST -2020
-
-For details about [Hacktoberfest](https://www.google.com/url?sa=t&source=web&rct=j&url=https://hacktoberfest.digitalocean.com/&ved=2ahUKEwj0zunf8L3sAhVKSX0KHfWPCV0QFjAAegQIFxAD&usg=AOvVaw3WClc5XFd06zQEPs6Cb6dg)
-
 
 https://pypi.org/project/fileGL/
 # fileGL
